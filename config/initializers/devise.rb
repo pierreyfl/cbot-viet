@@ -95,6 +95,8 @@ Devise.setup do |config|
   # encryptor), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 10
+  
+  config.secret_key = 'b2ed69981d03a5ac20fdef6d933d8d4d29406bf41b0b95a2d8440ab0b942e1b8bf0afbf2abd542a34c37028222ef9a95732025b6e6d91f5a6f0debaf344919dc'
 
   # Setup a pepper to generate the encrypted password.
   # config.pepper = '422bf17b4406dedcb20f901441e060dff2662d1fa900e5e70f7a5cf75fe10900daadb526077fa0f3f456f599aa7de11e688507f75b870fae831e98c194f97300'
@@ -235,7 +237,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
   # Use Facebook Auth
-  # config.omniauth :facebook, APP_CONFIG["facebook_app_id"], ENV["FACEBOOK_APP_SECRET"]
+   config.omniauth :facebook, "551004548572417", "3d0eae61971c394c35f6a1e146c0dd51", :scope => 'email,user_birthday', :display => 'popup',  token_params: { parse: :json }
 
   # Use Twitter Auth
   # config.omniauth :twitter, APP_CONFIG["twitter_app_id"], ENV["TWITTER_APP_SECRET"]

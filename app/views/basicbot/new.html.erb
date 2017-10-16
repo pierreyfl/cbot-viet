@@ -1,0 +1,30 @@
+<h1 class="page-header">Create New Bot</h1>
+
+<div class="row placeholders">
+  <div style="text-align: left; padding-left: 18px;">
+    <h3>Bot Details</h3>
+    <div class="col-md-6" style="padding: 0 !important;">
+    <%= form_for @basicbot, url: basicbot_index_path, style: "margin-left: 2px;" do |form|%>
+      <div class="form-group">
+        <%= form.label :name %>
+        <%= form.text_field :name, class: "form-control", placeholder: "Name" %>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Page ID</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Page ID">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Access Token</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Access Token">
+      </div>
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+          <%= form.submit 'Create', class: "btn btn-primary" %>
+
+        </div>
+       </div>
+    <% end %>
+  </div>
+  </div>
+</div>
+

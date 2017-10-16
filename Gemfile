@@ -24,6 +24,12 @@ gem 'spring', '>= 1.3.6', group: :development
 gem 'rails_12factor', '>= 0.0.3', group: :production
 # webserver
 gem 'puma'
+# Facebook omniouth
+gem 'omniauth-facebook'
+# Kaola - Facebook
+gem "koala"
+# Facebook messenger
+gem "facebook-messenger"
 
 # =======================
 # API

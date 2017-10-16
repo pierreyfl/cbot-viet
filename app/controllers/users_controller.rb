@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # After login go here
   def index
-
+    @basicbot = Basicbot.all
   end
 
   # GET /users/:id.:format

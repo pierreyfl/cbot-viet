@@ -34,5 +34,9 @@ module Rails4Boilerplate
             request_specs: false
         g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
+    
+    config.paths.add File.join("app", "bot"), glob: File.join("**","*.rb")
+    config.autoload_paths += Dir[Rails.root.join("app", "bot", "*")]
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end

@@ -1,0 +1,107 @@
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<h1 class="page-header">Bot Settings (<%= @basicbot.name %>)</h1>
+
+<ul  class="nav nav-pills">
+			<li class="active">
+        <a  href="#1a" data-toggle="tab">General Settings</a>
+			</li>
+			<li><a href="#2a" data-toggle="tab">Welcome Screen</a>
+			</li>
+			<li><a href="#3a" data-toggle="tab">Chat Log</a>
+			</li>
+		</ul>
+
+			<div class="tab-content clearfix">
+			  <div class="tab-pane active" id="1a">
+          <div class="col-md-6" style="padding-left: 0; padding-top: 20px;">
+          <form>
+            <div class="form-group">
+              <label class="form-control-label" for="formGroupExampleInput">Name</label>
+              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<%= @basicbot.name %>">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label" for="formGroupExampleInput2">Page ID</label>
+              <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="<%= @basicbot.page_id %>">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label" for="formGroupExampleInput2">Access Token</label>
+              <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="<%= @basicbot.access_token %>">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+          </div>
+				</div>
+				<div class="tab-pane" id="2a">
+          <div class="col-md-6" style="padding-left: 0; padding-top: 20px;">
+          <form>
+            <div class="form-group">
+              <label class="form-control-label" for="formGroupExampleInput">Greeting Text</label>
+              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<%= @basicbot.welcome_greeting %>">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label" for="formGroupExampleInput2">Get Started Button</label>
+              <br><input type="checkbox" data-toggle="toggle">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+				</div>
+        <div class="tab-pane" id="3a">
+          <div class="container" style="padding: 30px;">
+              
+              <div class="row">
+
+                  <div class="message-wrap col-lg-12">
+                      <div class="msg-wrap">
+
+
+                          <div class="media msg ">
+                              
+                              <div class="media-body">
+                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
+                                  <h5 class="media-heading">19939199391</h5>
+                                  <small class="col-lg-10">
+                                    Hello Bot!
+                                  </small>
+                              </div>
+                          </div>
+                          <div class="media msg ">
+                              
+                              <div class="media-body">
+                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
+                                  <h5 class="media-heading">19939199391</h5>
+                                  <small class="col-lg-10">
+                                    Hello Bot!
+                                  </small>
+                              </div>
+                          </div>
+                          <div class="media msg ">
+                              
+                              <div class="media-body">
+                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
+                                  <h5 class="media-heading">19939199391</h5>
+                                  <small class="col-lg-10">
+                                    Hello Bot!
+                                  </small>
+                              </div>
+                          </div>
+
+                          <div class="media msg ">
+                              
+                              <div class="media-body">
+                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
+                                  <h5 class="media-heading">19939199391</h5>
+                                  <small class="col-lg-10">
+                                    Hello Bot!
+                                  </small>
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+				</div>
+
+			</div>

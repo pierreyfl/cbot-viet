@@ -4,13 +4,15 @@ Rails.application.routes.draw do
   # =======================
   # GENERAL
   # =======================
+  mount Facebook::Messenger::Server, at: "bot"
 
    # You can have the root of your site routed with "root"
   root 'shared#index'
 
   # Send support form data
   match '/send_support_request' => 'shared#send_support_request', via: [:post]
-
+  resources :settings
+  resources :basicbot
   # =======================
   # USERS
   # =======================

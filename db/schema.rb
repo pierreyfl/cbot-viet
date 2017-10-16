@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129184051) do
+ActiveRecord::Schema.define(version: 20171016112251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "basicbots", force: :cascade do |t|
+    t.string "name"
+    t.string "access_token"
+    t.string "verify_token"
+    t.string "app_secret"
+    t.string "page_id"
+    t.string "welcome_greeting"
+    t.string "message_text"
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.text     "message"
+    t.string   "sender_id"
+    t.datetime "sent_at"
+  end
 
   create_table "global_configs", force: :cascade do |t|
     t.string   "app_name"
@@ -65,6 +81,8 @@ ActiveRecord::Schema.define(version: 20150129184051) do
     t.boolean  "admin",                  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
