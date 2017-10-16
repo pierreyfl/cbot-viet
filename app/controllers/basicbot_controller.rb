@@ -28,7 +28,7 @@ class BasicbotController < ApplicationController
     private
     
     def basicbot_params
-      params.require(:basicbot).permit(:name)
+      params.require(:basicbot).permit(:name, :access_token, :page_id, :welcome_greeting, :message_text)
     end
     # Determine layout based on action name
     def resolve_layout
