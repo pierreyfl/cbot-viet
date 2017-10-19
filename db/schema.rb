@@ -11,19 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016112251) do
+ActiveRecord::Schema.define(version: 20171018235855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "add_answer_to_postbacks", force: :cascade do |t|
+    t.integer  "answer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "add_answer_to_postbacks", ["answer_id"], name: "index_add_answer_to_postbacks_on_answer_id", using: :btree
+
+  create_table "answers", force: :cascade do |t|
+    t.text     "question",         default: [],              array: true
+    t.text     "reply"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "basicbot_id"
+    t.boolean  "exact_keyword"
+    t.boolean  "multiple_answers"
+    t.text     "multiple_options", default: [],              array: true
+  end
+
+  add_index "answers", ["basicbot_id"], name: "index_answers_on_basicbot_id", using: :btree
+
   create_table "basicbots", force: :cascade do |t|
-    t.string "name"
-    t.string "access_token"
-    t.string "verify_token"
-    t.string "app_secret"
-    t.string "page_id"
-    t.string "welcome_greeting"
-    t.string "message_text"
+    t.string  "name"
+    t.string  "access_token"
+    t.string  "verify_token"
+    t.string  "app_secret"
+    t.string  "page_id"
+    t.string  "welcome_greeting"
+    t.string  "message_text"
+    t.text    "greeting"
+    t.boolean "get_started"
   end
 
   create_table "chats", force: :cascade do |t|
@@ -62,6 +85,20 @@ ActiveRecord::Schema.define(version: 20171016112251) do
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
+  create_table "postbacks", force: :cascade do |t|
+    t.string   "payload"
+    t.text     "reply"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "basicbot_id"
+    t.boolean  "multiple_answers"
+    t.text     "multiple_options", default: [],              array: true
+    t.integer  "answer_id"
+  end
+
+  add_index "postbacks", ["answer_id"], name: "index_postbacks_on_answer_id", using: :btree
+  add_index "postbacks", ["basicbot_id"], name: "index_postbacks_on_basicbot_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
@@ -89,4 +126,8 @@ ActiveRecord::Schema.define(version: 20171016112251) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "add_answer_to_postbacks", "answers"
+  add_foreign_key "answers", "basicbots"
+  add_foreign_key "postbacks", "answers"
+  add_foreign_key "postbacks", "basicbots"
 end

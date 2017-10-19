@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   match '/send_support_request' => 'shared#send_support_request', via: [:post]
   resources :settings
   resources :basicbot
+  resources :answers, except: [:create]
+  post 'answers/:basicbot_id' => "answers#create"
+  resources :postbacks, except: [:create]
+  post 'postbacks/:basicbot_id' => "postbacks#create"
+
   # =======================
   # USERS
   # =======================

@@ -19,7 +19,7 @@ gem 'pg', '0.18.2'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.1',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring', '>= 1.3.6', group: :development
+#gem 'spring', '>= 1.3.6', group: :development
 # Makes running Rails easier - based on 12factor.net
 gem 'rails_12factor', '>= 0.0.3', group: :production
 # webserver
@@ -161,12 +161,12 @@ end
 # =======================
 
 group :development do
-  gem 'guard', '>= 2.12.5', require: false
-  gem 'guard-livereload', '>= 2.5.2', require: false
+  #gem 'guard', '>= 2.12.5', require: false
+  #gem 'guard-livereload', '>= 2.5.2', require: false
   # Watch test files and run on save, start it with: guard init rspec
-  gem 'guard-rspec', '>= 4.6.5', require: false
-  gem 'rack-livereload', '>= 0.3.15'
-  gem 'rb-fsevent', '>= 0.9.4', require: false
+  #gem 'guard-rspec', '>= 4.6.5', require: false
+  #gem 'rack-livereload', '>= 0.3.15'
+  #gem 'rb-fsevent', '>= 0.9.4', require: false
 end
 
 # =======================

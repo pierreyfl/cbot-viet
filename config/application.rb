@@ -1,7 +1,10 @@
 require File.expand_path('../boot', __FILE__)
 
+
 require 'rails/all'
 require 'yaml'
+
+
 
 APP_CONFIG = YAML.load_file("config/global_config.yml")
 
@@ -36,7 +39,9 @@ module Rails4Boilerplate
     end
     
     config.paths.add File.join("app", "bot"), glob: File.join("**","*.rb")
+    config.paths.add File.join("app", "rubotnik"), glob: File.join("**","*.rb")
     config.autoload_paths += Dir[Rails.root.join("app", "bot", "*")]
+    config.autoload_paths += Dir[Rails.root.join("app", "rubotnik", "*")]
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

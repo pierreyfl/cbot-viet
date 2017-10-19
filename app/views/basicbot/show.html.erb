@@ -1,5 +1,18 @@
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
+<script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
+
+<style type="text/css">
+.bootstrap-tagsinput {
+    width: 100%;
+}
+.label {
+    line-height: 2 !important;
+}
+</style>
+
+
 
 <h1 class="page-header">Bot Settings (<%= @basicbot.name %>)</h1>
 
@@ -9,44 +22,214 @@
 			</li>
 			<li><a href="#2a" data-toggle="tab">Welcome Screen</a>
 			</li>
+			<li><a href="#4a" data-toggle="tab">Q&A</a>
+			</li>
+      <li><a href="#5a" data-toggle="tab">FLOW</a>
+			</li>
 			<li><a href="#3a" data-toggle="tab">Chat Log</a>
 			</li>
 		</ul>
 
 			<div class="tab-content clearfix">
+			  <div class="tab-pane" id="4a">
+          <div class="col-md-6" style="padding-left: 0; padding-top: 20px;">
+            <% @basicbot.answers.each do |a| %>
+               <div class="jumbotron">
+                 <%= form_for(@answers, :url => answer_path(basicbot_id: @basicbot.id), method: :post) do |f| %>
+              
+                 <div id="bootstrapTagsInputForm">
+                     <div class="form-group">
+                           <label class="form-control-label" for="formGroupExampleInput">Exact Match</label>
+                           <%#= f.text_field :question, class: 'form-control', value: "Keyword", data: {role: "tagsinput"} %>
+                           <%= f.select :question, options_for_select(a.question), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
+                     </div>
+                     <div class="form-group">
+                       <label class="form-control-label" for="formGroupExampleInput2">Answer</label>
+                       <%= f.text_field :reply, class: 'form-control', placeholder: a.reply %>
+                     </div>
+                     <div class="form-group">
+                       <label class="form-control-label" for="formGroupExampleInput2">Exact Keyword</label>
+                       <br><%= f.check_box :exact_keyword, checked: a.exact_keyword, data: {toggle: "toggle"} %>
+                     </div>
+                     <div class="form-group">
+                       <label class="form-control-label" for="formGroupExampleInput2">Selective Answers</label>
+                       <br><%= f.check_box :multiple_answers, checked: a.multiple_answers, data: {toggle: "toggle"} %>
+                     </div>
+                     <div class="form-group">
+                           <label class="form-control-label" for="formGroupExampleInput">Selective Answers (Multiple Options)</label>
+                           <%#= f.text_field :question, class: 'form-control', value: "Keyword", data: {role: "tagsinput"} %>
+                           <%= f.select :multiple_options, options_for_select([a.multiple_options.map {|i| i[0]}]), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
+                     </div>
+                     
+
+                 </div>
+
+                
+                
+           
+               </div>
+
+            <% end %>
+ 
+             <% end %>
+            <div class="jumbotron">
+              <%= form_for(@answers, :url => answer_path(basicbot_id: @basicbot.id), method: :post) do |f| %>
+              
+              <div id="bootstrapTagsInputForm">
+                  <div class="form-group">
+                        <label class="form-control-label" for="formGroupExampleInput">Question (Any Keyword)</label>
+                        <%#= f.text_field :question, class: 'form-control', value: "Keyword", data: {role: "tagsinput"} %>
+                        <%= f.select :question, options_for_select([]), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label" for="formGroupExampleInput2">Answer</label>
+                    <%= f.text_field :reply, class: 'form-control' %>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label" for="formGroupExampleInput2">Exact Keyword</label>
+                    <br><%= f.check_box :exact_keyword, data: {toggle: "toggle"} %>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label" for="formGroupExampleInput2">Selective Answers</label>
+                    <br><%= f.check_box :multiple_answers, data: {toggle: "toggle"} %>
+                  </div>
+                  <div class="form-group">
+                        <label class="form-control-label" for="formGroupExampleInput">Selective Answers (Multiple Options)</label>
+                        <%#= f.text_field :question, class: 'form-control', value: "Keyword", data: {role: "tagsinput"} %>
+                        <%= f.select :multiple_options, options_for_select([]), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
+                  </div>
+
+              </div>
+
+                
+                
+           
+            </div>
+         <div class="jumbotron">
+           <%= f.submit "Save", class: "btn btn-primary btn-lg btn-block" %>
+           
+         </div>
+         <% end %>
+          </div>
+				</div>
+			  <div class="tab-pane" id="5a">
+          <div class="col-md-6" style="padding-left: 0; padding-top: 20px;">
+            <% @pbacks.each do |i| %>
+            <div class="jumbotron">
+               <h5><%= i.answer_id %></h3>
+                 <% if i.multiple_answers %>
+                   <% i.multiple_options.each do |b| %>
+                   <%= form_for(@postbacks, :url => postback_path(basicbot_id: @basicbot.id), method: :post) do |f| %>
+                   <div class="form-group" style="margin-top: 20px;">
+                         <label for="inputCity" class="col-form-label">Option Chosen: <%= b[0].titleize %></label>
+                         <%= f.hidden_field :payload, value: b[1] %>
+                         <%= f.hidden_field :answer_id, value: i.answer_id %>
+                         <%= f.text_field :reply, class: "form-control", placeholder: "Your reply" %>
+                       </div>
+                       <div class="form-group" style="margin-top: 20px;">
+                   <label class="form-control-label" for="formGroupExampleInput2">Multiple Answers</label>
+                   <br><%= f.check_box :multiple_answers, data: {toggle: "toggle"} %>
+                 </div>
+                 <div class="form-group" style="margin-top: 20px;">
+                 
+                   <label class="form-control-label" for="formGroupExampleInput2">Your Options Reply</label>
+                   <br><%= f.select :multiple_options, options_for_select([]), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
+                 </div>
+               
+                   <%= f.submit "Save", class: "btn btn-primary btn-lg btn-block" %>
+                 <% end %>
+                     <hr />
+                   <% end %>
+                 <% end %>
+             
+             
+        
+            </div>
+              
+            <% end %>
+            <% @basicbot.answers.each do |a| %>
+              <% if a.multiple_answers %>
+              
+               <div class="jumbotron">
+                  <label for="title" class="col-form-label">Question <%= a.id %></label>
+                 <input type="text" value="<%= a.question %>" data-role="tagsinput" />
+                 <% a.multiple_options.each do |b| %>
+                 <%= form_for(@postbacks, :url => postback_path(basicbot_id: @basicbot.id), method: :post) do |f| %>
+                 <div class="form-group" style="margin-top: 20px;">
+                       <label for="inputCity" class="col-form-label">Option Chosen: <%= b[0].titleize %></label>
+                       <%= f.hidden_field :payload, value: b[1] %>
+                       <%= f.hidden_field :answer_id, value: a.id %>
+                       <%= f.text_field :reply, class: "form-control"  %>
+                     </div>
+                     <div class="form-group" style="margin-top: 20px;">
+                 <label class="form-control-label" for="formGroupExampleInput2">Multiple Answers</label>
+                 <br><%= f.check_box :multiple_answers, data: {toggle: "toggle"} %>
+               </div>
+               <div class="form-group" style="margin-top: 20px;">
+                 
+                 <label class="form-control-label" for="formGroupExampleInput2">Your Options Reply</label>
+                 <br><%= f.select :multiple_options, options_for_select([]), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
+               </div>
+               
+                 <%= f.submit "Save", class: "btn btn-primary btn-lg btn-block" %>
+               <% end %>
+                   <hr />
+                 <% end %>
+                
+                
+           
+               </div>
+               
+
+            <% end %>
+ 
+             <% end %>
+
+         <div class="jumbotron">
+           
+           
+         </div>
+
+          </div>
+				</div>
 			  <div class="tab-pane active" id="1a">
           <div class="col-md-6" style="padding-left: 0; padding-top: 20px;">
-          <form>
+          <%= form_for(@basicbot) do |f| %>
             <div class="form-group">
               <label class="form-control-label" for="formGroupExampleInput">Name</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<%= @basicbot.name %>">
+              <%= f.text_field :name, class: 'form-control', placeholder: @basicbot.name %>
+              
             </div>
             <div class="form-group">
               <label class="form-control-label" for="formGroupExampleInput2">Page ID</label>
-              <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="<%= @basicbot.page_id %>">
+              <%= f.text_field :page_id, class: 'form-control', placeholder: @basicbot.page_id %>
             </div>
             <div class="form-group">
               <label class="form-control-label" for="formGroupExampleInput2">Access Token</label>
-              <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="<%= @basicbot.access_token %>">
+              <%= f.text_field :access_token, class: 'form-control', placeholder: @basicbot.access_token %>
+              
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-          </form>
+            <%= f.submit "Update", class: "btn btn-primary" %>
+            <% end %>
           </div>
 				</div>
 				<div class="tab-pane" id="2a">
           <div class="col-md-6" style="padding-left: 0; padding-top: 20px;">
-          <form>
+          <%= form_for(@basicbot) do |f| %>
             <div class="form-group">
               <label class="form-control-label" for="formGroupExampleInput">Greeting Text</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<%= @basicbot.welcome_greeting %>">
+              <%= f.text_field :welcome_greeting, class: 'form-control', placeholder: @basicbot.welcome_greeting %>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label" for="formGroupExampleInput">Welcome Text (After button tapped)</label>
+              <%= f.text_field :greeting, class: 'form-control', placeholder: @basicbot.greeting %>
             </div>
             <div class="form-group">
               <label class="form-control-label" for="formGroupExampleInput2">Get Started Button</label>
-              <br><input type="checkbox" data-toggle="toggle">
+              <br><%= f.check_box :get_started, checked: @basicbot.get_started, data: {toggle: "toggle"} %>
             </div>
-            
-            <button type="submit" class="btn btn-primary">Update</button>
-          </form>
+            <%= f.submit "Update", class: "btn btn-primary" %>
+          <% end %>
         </div>
 				</div>
         <div class="tab-pane" id="3a">

@@ -29,6 +29,7 @@ class ExampleProvider < Facebook::Messenger::Configuration::Providers::Base
   # Returns a String describing an access token.
   def access_token_for(recipient)
     Basicbot.find_by(page_id: recipient['id']).access_token
+    puts "HAHAAHA"
   end
 
   private
@@ -40,4 +41,5 @@ end
 
 Facebook::Messenger.configure do |config|
   config.provider = ExampleProvider.new
+  puts "WOOOOOW"
 end
