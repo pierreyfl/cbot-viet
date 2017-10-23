@@ -24,7 +24,7 @@ module UI
     end
 
     def build(user)
-      @template[:recipient][:id] = user[:id]
+      @template[:recipient][:id] = user.id
       @template
     end
   end
