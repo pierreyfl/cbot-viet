@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018235855) do
+ActiveRecord::Schema.define(version: 20171023015704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20171018235855) do
     t.boolean  "exact_keyword"
     t.boolean  "multiple_answers"
     t.text     "multiple_options", default: [],              array: true
+    t.string   "image"
   end
 
   add_index "answers", ["basicbot_id"], name: "index_answers_on_basicbot_id", using: :btree
@@ -94,6 +95,7 @@ ActiveRecord::Schema.define(version: 20171018235855) do
     t.boolean  "multiple_answers"
     t.text     "multiple_options", default: [],              array: true
     t.integer  "answer_id"
+    t.string   "image"
   end
 
   add_index "postbacks", ["answer_id"], name: "index_postbacks_on_answer_id", using: :btree

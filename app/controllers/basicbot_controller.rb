@@ -23,6 +23,7 @@ class BasicbotController < ApplicationController
     @answers = Answer.new
     @postbacks = Postback.new
     @pbacks = @basicbot.postbacks
+    @chat = Chat.all
   end
   
   def update
@@ -34,6 +35,12 @@ class BasicbotController < ApplicationController
           # if update is unsuccessful
           redirect_to basicbot_index_path
       end
+  end
+  
+  def destroy
+      @basicbot = Basicbot.find(params[:id])
+      @basicbot.destroy
+      redirect_to basicbot_index_path, :notice => "Your Bot has been deleted"
   end
   
 

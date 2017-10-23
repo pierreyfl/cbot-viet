@@ -48,6 +48,10 @@
                        <%= f.text_field :reply, class: 'form-control', placeholder: a.reply %>
                      </div>
                      <div class="form-group">
+                       <label class="form-control-label" for="formGroupExampleInput2">Image Attachment</label>
+                       <%= f.text_field :image, class: 'form-control', placeholder: a.image %>
+                     </div>
+                     <div class="form-group">
                        <label class="form-control-label" for="formGroupExampleInput2">Exact Keyword</label>
                        <br><%= f.check_box :exact_keyword, checked: a.exact_keyword, data: {toggle: "toggle"} %>
                      </div>
@@ -86,6 +90,10 @@
                     <%= f.text_field :reply, class: 'form-control' %>
                   </div>
                   <div class="form-group">
+                    <label class="form-control-label" for="formGroupExampleInput2">Image Attachment</label>
+                    <%= f.text_field :image, class: 'form-control', placeholder: 'Set your image Link'%>
+                  </div>
+                  <div class="form-group">
                     <label class="form-control-label" for="formGroupExampleInput2">Exact Keyword</label>
                     <br><%= f.check_box :exact_keyword, data: {toggle: "toggle"} %>
                   </div>
@@ -116,15 +124,21 @@
           <div class="col-md-6" style="padding-left: 0; padding-top: 20px;">
             <% @pbacks.each do |i| %>
             <div class="jumbotron">
-               <h5><%= i.answer_id %></h3>
+               <h5>Question ID - <%= i.answer_id %></h5>
+               
+               <h5>Reply - <%= i.reply %></h5>
                  <% if i.multiple_answers %>
                    <% i.multiple_options.each do |b| %>
                    <%= form_for(@postbacks, :url => postback_path(basicbot_id: @basicbot.id), method: :post) do |f| %>
                    <div class="form-group" style="margin-top: 20px;">
-                         <label for="inputCity" class="col-form-label">Option Chosen: <%= b[0].titleize %></label>
+                         <label for="inputCity" class="col-form-label">Option Selected: <%= b[0].titleize %></label>
                          <%= f.hidden_field :payload, value: b[1] %>
                          <%= f.hidden_field :answer_id, value: i.answer_id %>
-                         <%= f.text_field :reply, class: "form-control", placeholder: "Your reply" %>
+                         <%= f.text_field :reply, class: "form-control", placeholder: find_postback_reply(b[1])  %>
+                       </div>
+                       <div class="form-group">
+                         <label class="form-control-label" for="formGroupExampleInput2">Image Attachment</label>
+                         <%= f.text_field :image, class: 'form-control', placeholder: find_postback_image(b[1]) %>
                        </div>
                        <div class="form-group" style="margin-top: 20px;">
                    <label class="form-control-label" for="formGroupExampleInput2">Multiple Answers</label>
@@ -135,8 +149,7 @@
                    <label class="form-control-label" for="formGroupExampleInput2">Your Options Reply</label>
                    <br><%= f.select :multiple_options, options_for_select([]), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
                  </div>
-               
-                   <%= f.submit "Save", class: "btn btn-primary btn-lg btn-block" %>
+                 <%= f.submit "Save", class: "btn btn-primary btn-lg btn-block" %>
                  <% end %>
                      <hr />
                    <% end %>
@@ -211,6 +224,9 @@
             </div>
             <%= f.submit "Update", class: "btn btn-primary" %>
             <% end %>
+            
+            <h3>Remove this bot</h3>
+            <%= link_to "Delete", basicbot_path(@basicbot), :confirm => "Are you sure?", :method => :delete %>
           </div>
 				</div>
 				<div class="tab-pane" id="2a">
@@ -239,51 +255,18 @@
 
                   <div class="message-wrap col-lg-12">
                       <div class="msg-wrap">
-
-
+                        <% @chat.each do |chat| %>
                           <div class="media msg ">
-                              
                               <div class="media-body">
-                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
-                                  <h5 class="media-heading">19939199391</h5>
+                                  <small class="pull-right time"><i class="fa fa-clock-o"></i><%= chat.sent_at %></small>
+                                  <h5 class="media-heading"><%= chat.sender_id %></h5>
                                   <small class="col-lg-10">
-                                    Hello Bot!
+                                    <%= chat.message %>
                                   </small>
                               </div>
                           </div>
-                          <div class="media msg ">
-                              
-                              <div class="media-body">
-                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
-                                  <h5 class="media-heading">19939199391</h5>
-                                  <small class="col-lg-10">
-                                    Hello Bot!
-                                  </small>
-                              </div>
-                          </div>
-                          <div class="media msg ">
-                              
-                              <div class="media-body">
-                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
-                                  <h5 class="media-heading">19939199391</h5>
-                                  <small class="col-lg-10">
-                                    Hello Bot!
-                                  </small>
-                              </div>
-                          </div>
-
-                          <div class="media msg ">
-                              
-                              <div class="media-body">
-                                  <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:30am</small>
-                                  <h5 class="media-heading">19939199391</h5>
-                                  <small class="col-lg-10">
-                                    Hello Bot!
-                                  </small>
-                              </div>
-                          </div>
+                          <% end %>
                       </div>
-
                   </div>
 				</div>
 

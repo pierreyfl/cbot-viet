@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
   private
   
   def answer_params
-    params.require(:answer).permit(:reply, :exact_keyword, :multiple_answers, :question => []).tap do |whitelisted|
+    params.require(:answer).permit(:reply, :exact_keyword, :multiple_answers, :image, :question => []).tap do |whitelisted|
       whitelisted[:multiple_options] = params[:answer][:multiple_options]
     end
 

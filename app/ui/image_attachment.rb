@@ -18,9 +18,9 @@ module UI
       }
     end
 
-    def send(user)
+    def send(user, at)
       formed = build(user)
-      Bot.deliver(formed, access_token: ENV['ACCESS_TOKEN'])
+      Bot.deliver(formed, access_token: at)
     end
 
     def build(user)

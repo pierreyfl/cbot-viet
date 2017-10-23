@@ -22,7 +22,7 @@ Bot.on :message do |message|
   #message.reply(text: Basicbot.find_by_page_id(message.recipient['id']).message_text)
   @basicbot = Basicbot.find_by_page_id(message.recipient['id'])
   @access_token = @basicbot.access_token
-  
+  Chat.create(message: message.text, sender_id: message.sender['id'], sent_at: message.sent_at)
   
     
   Rubotnik::MessageDispatch.new(message).route do
@@ -37,14 +37,48 @@ Bot.on :message do |message|
        @answers.each do |a|
          bind_array a.question, all: a.exact_keyword do
            if a.multiple_answers
-             replies = UI::QuickReplies.build(['Yes', 'YES'], ['No', 'NO'], ['Maybe', 'Maybe'])
-             say a.reply, quick_replies: replies
+             unless a.image.nil?
+               img_url = a.image
+               UI::ImageAttachment.new(img_url).send(@user, @access_token)
+             end
+             replies = UI::QuickReplies.build(a.multiple_options)
+             say a.reply, quick_replies: replies 
            else
+             unless a.image.nil?
+               img_url = a.image
+               UI::ImageAttachment.new(img_url).send(@user, @access_token)
+             end
              say a.reply
            end
          end
         end
       end
+      
+     unless message.quick_reply.nil?
+       @basicbot2 = Basicbot.find_by_page_id(message.recipient['id'])
+       @basicbot2.postbacks.each do |i|
+         if message.quick_reply == i.payload
+           if i.multiple_answers
+             unless i.image.nil?
+               img_url = i.image
+               UI::ImageAttachment.new(img_url).send(@user, @access_token)
+             end
+             replies = UI::QuickReplies.build(i.multiple_options)
+             say i.reply, quick_replies: replies
+             puts "HAHAHAHAHAHA"
+             puts @user
+           else
+             unless i.image.nil?
+               img_url = i.image
+               UI::ImageAttachment.new(img_url).send(@user, @access_token)
+             end
+             say i.reply
+           end
+         end
+       end
+     end
+     
+     
      bind 'carousel', 'generic template', to: :show_carousel
      #bind 'button', 'template', all: true, to: :show_button_template
      bind 'image', to: :send_image
@@ -82,7 +116,12 @@ Bot.on :message do |message|
 end
 
 Bot.on :postback do |postback|
+  puts postback
+  puts "HUHUHU"
   Rubotnik::PostbackDispatch.new(postback).route do
+    
+    puts postback
+    puts "WEEEKKAKA"
     @basicbot = Basicbot.find_by_page_id(postback.recipient["id"])
     @access_token = @basicbot.access_token
     
@@ -91,7 +130,7 @@ Bot.on :postback do |postback|
         
         say i.reply
         if multiple_answers
-          replies = UI::QuickReplies.build(i.multiple_options.flatten)
+          replies = UI::QuickReplies.build(i.multiple_options)
           say i.reply, quick_replies: replies
         end
       end
@@ -113,7 +152,7 @@ end
       #end
   #end
   #end
-#Bot.on :message_echo do |message_echo|
+Bot.on :message_echo do |message_echo|
   #message_echo.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
   #message_echo.sender      # => { 'id' => '1008372609250235' }
   #message_echo.seq         # => 73
@@ -122,7 +161,8 @@ end
   #message_echo.attachments # => [ { 'type' => 'image', 'payload' => { 'url' => 'https://www.example.com/1.jpg' } } ]
 
   #puts message_echo.text # Log or store in your storage method of choice (skynet, obviously)
-  #end
+  #puts "TEST MESSAGE ECHO"
+end
 
 
 

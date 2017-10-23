@@ -1,9 +1,11 @@
 module UI
   # https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies
   class QuickReplies
-    def self.build(*replies)
+    def self.build(replies)
       #puts replies
       #puts "HAHAHA"
+      puts "HAHAHAHA"
+      puts replies
         replies.map do |reply|
         case reply
         when Hash then build_from_hash(reply)

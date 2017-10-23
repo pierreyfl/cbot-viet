@@ -20,11 +20,13 @@ module ShowUIExamples
     end
   end
 
-  def send_image
+  def send_image(at: @access_token)
+    puts at
+    puts "HAHAHAHAHAHA33"
     say "Wait a bit while I pick a nice random image for you"
     img_url = 'https://unsplash.it/600/400?random'
-    @message.typing_on if @message
-    UI::ImageAttachment.new(img_url).send(@user)
-    @message.typing_off if @message
+    #@message.typing_on if @message
+    UI::ImageAttachment.new(img_url).send(@user, at)
+    #@message.typing_off if @message
   end
 end

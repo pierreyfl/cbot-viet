@@ -1,4 +1,4 @@
 class Basicbot < ActiveRecord::Base
-  has_many :answers
-  has_many :postbacks
+  has_many :answers, :dependent => :destroy
+  has_many :postbacks, :dependent => :destroy
 end

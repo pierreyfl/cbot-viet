@@ -17,7 +17,6 @@ module Helpers
       message: { text: text }
     }
     message_options[:message][:quick_replies] = quick_replies if quick_replies
-    puts at
     Bot.deliver(message_options, access_token: at)
   end
 
