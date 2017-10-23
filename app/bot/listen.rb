@@ -43,6 +43,8 @@ Bot.on :message do |message|
                img_url = a.image
                puts @user.id
                puts "USER HERE"
+               puts message.sender["id"]
+               puts message.recipient["id"]
                #UI::ImageAttachment.new(img_url).send(@user, @access_token)
              end
              replies = UI::QuickReplies.build(a.multiple_options)
