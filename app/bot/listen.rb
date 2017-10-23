@@ -41,6 +41,8 @@ Bot.on :message do |message|
            if a.multiple_answers
              unless a.image.nil?
                img_url = a.image
+               puts @user.id
+               puts "USER HERE"
                #UI::ImageAttachment.new(img_url).send(@user, @access_token)
              end
              replies = UI::QuickReplies.build(a.multiple_options)
@@ -48,6 +50,8 @@ Bot.on :message do |message|
            else
              unless a.image.nil?
                img_url = a.image
+               puts @user.id
+               puts "USER HERE"
                #UI::ImageAttachment.new(img_url).send(@user, @access_token)
              end
              say a.reply
