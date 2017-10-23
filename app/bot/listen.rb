@@ -41,14 +41,14 @@ Bot.on :message do |message|
            if a.multiple_answers
              unless a.image.nil?
                img_url = a.image
-               UI::ImageAttachment.new(img_url).send(message.sender, @access_token)
+               UI::ImageAttachment.new(img_url).send(message.recipient, @access_token)
              end
              replies = UI::QuickReplies.build(a.multiple_options)
              say a.reply, quick_replies: replies 
            else
              unless a.image.nil?
                img_url = a.image
-               UI::ImageAttachment.new(img_url).send(message.sender, @access_token)
+               UI::ImageAttachment.new(img_url).send(message.recipient, @access_token)
              end
              say a.reply
            end
