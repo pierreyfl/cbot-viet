@@ -54,7 +54,7 @@ Bot.on :message do |message|
                img_url = a.image
                puts @user.id
                puts "USER HERE"
-               #UI::ImageAttachment.new(img_url).send(@user, @access_token)
+               UI::ImageAttachment.new(img_url).send(@user, @access_token)
              end
              say a.reply
            end
@@ -69,7 +69,7 @@ Bot.on :message do |message|
            if i.multiple_answers
              unless i.image.nil?
                img_url = i.image
-               #UI::ImageAttachment.new(img_url).send(message.sender, @access_token)
+               UI::ImageAttachment.new(img_url).send(@user, @access_token)
              end
              replies = UI::QuickReplies.build(i.multiple_options)
              say i.reply, quick_replies: replies
@@ -78,7 +78,7 @@ Bot.on :message do |message|
            else
              unless i.image.nil?
                img_url = i.image
-               #UI::ImageAttachment.new(img_url).send(message.sender, @access_token)
+               UI::ImageAttachment.new(img_url).send(@user, @access_token)
              end
              say i.reply
            end

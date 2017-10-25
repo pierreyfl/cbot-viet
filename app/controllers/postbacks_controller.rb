@@ -10,7 +10,7 @@ class PostbacksController < ApplicationController
     @postbacks.multiple_options = params[:postback][:multiple_options]
     @postbacks.image = params[:postback][:image]
     @postbacks.save
-    redirect_to root_path
+    redirect_to basicbot_url(params[:basicbot_id]) + "#5a"
   end
   
   private

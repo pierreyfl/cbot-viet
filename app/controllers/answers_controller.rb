@@ -7,10 +7,13 @@ class AnswersController < ApplicationController
   def create
     params[:answer][:question] = params[:answer][:question].reject(&:empty?)
     params[:answer][:multiple_options] = params[:answer][:multiple_options].reject(&:empty?).map {|i| [] << i << i + Random.rand(1000).to_s}
+    if params[:answer][:image] == ""
+      params[:answer][:image] = nil
+    end
     @basicbot = Basicbot.find(params[:basicbot_id])
     @answers = @basicbot.answers.new(answer_params)
     @answers.save
-    redirect_to root_path
+    redirect_to basicbot_url(params[:basicbot_id]) + "#4a"
   end
   
   

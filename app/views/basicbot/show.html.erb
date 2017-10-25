@@ -62,7 +62,7 @@
                      <div class="form-group">
                            <label class="form-control-label" for="formGroupExampleInput">Selective Answers (Multiple Options)</label>
                            <%#= f.text_field :question, class: 'form-control', value: "Keyword", data: {role: "tagsinput"} %>
-                           <%= f.select :multiple_options, options_for_select([a.multiple_options.map {|i| i[0]}]), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
+                           <%= f.select :multiple_options, options_for_select(a.multiple_options.map {|i| i[0]}), {}, {:multiple => true, :class => "form-control", data: {role: "tagsinput"} } %>
                      </div>
                      
 
