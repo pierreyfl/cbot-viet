@@ -8,7 +8,11 @@ class PostbacksController < ApplicationController
     @postbacks.multiple_answers = params[:postback][:multiple_answers]
     @postbacks.answer_id = params[:postback][:answer_id]
     @postbacks.multiple_options = params[:postback][:multiple_options]
-    @postbacks.image = params[:postback][:image]
+    if params[:postback][:image] == ""
+      @postbacks.image = nil
+    else  
+      @postbacks.image = params[:postback][:image]
+    end
     @postbacks.save
     redirect_to basicbot_url(params[:basicbot_id]) + "#5a"
   end
